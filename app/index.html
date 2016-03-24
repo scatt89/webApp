@@ -1,0 +1,466 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+  </head>
+  <body ng-app="webAppApp">
+    <!--[if lte IE 8]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <div class="container-fluid">
+
+      <!-- Cabecera -->
+      <div class="row">
+        <div class="header">
+          <div class="col-xs-12" style="background-color:lightblue;">
+            <h3>Docker Logging</h3>
+          </div>
+        </div>
+      </div>
+
+      <!-- NavBar -->
+      <did class="row">
+        <div class="header">
+          <div class="col-xs-12">
+            <form class="form-inline" role="form">
+              <!-- Hacer una conexión -->
+              <div class="form-group">
+                <input type="link" class="form-control" id="link" placeholder="http://localhost:9200/myIndex">
+                <button type="button" class="btn btn-default">
+                  <span class="glyphicon glyphicon-ok"></span> Connect
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </did>
+
+      <!-- Barra lateral y contenido principal -->
+      <div class="row">
+        <!-- Barra Lateral -->
+        <div class="col-xs-12 col-sm-3 side-nav">
+
+          <!-- Buscar un String-->
+          <div class="nav_element">
+            <h3>Text search</h3>
+            <form class="form-inline" role="search">
+              <div class="form-group input-group">
+                <input type="text" class="form-control" placeholder="Search some text">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">
+                              <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                        </span>
+              </div>
+            </form>
+          </div>
+
+          <!-- Filtrar por Nivel de log -->
+          <div class="nav_element">
+            <form class="form-inline" role="form">
+              <h3 id="logLevelTitle">Level log filter
+                <span><input type="checkbox"></span>
+              </h3>
+              <div class="form-group">
+                <select title="Log Level" class="form-control">
+                  <option selected disabled>Log Level</option>
+                  <option>All</option>
+                  <option>Info</option>
+                  <option>Warn</option>
+                  <option>Debug</option>
+                  <option>Error</option>
+                </select>
+              </div>
+            </form>
+          </div>
+
+          <!-- Filtrar por fecha -->
+          <div class="nav_element">
+            <form role="form">
+              <h3>Date filter
+                        <span>
+                            <input type="checkbox">
+                        </span>
+              </h3>
+              <h4>Start time</h4>
+              <input type="datetime-local">
+              <h4>End time</h4>
+              <input type="datetime-local">
+            </form>
+          </div>
+
+          <!-- Botón de buscar (GO!) -->
+          <div class="nav_element">
+            <button type="button" class="btn btn-default btn-lg btn-block">Go!</button>
+          </div>
+
+        </div>
+
+        <!-- Contenido Principal -->
+        <div class="col-xs-12 col-sm-9">
+          <div class="row" id="tableDiv">
+            <table class="table table-bordered table-striped table-hover table-condensed table-responsive" style="overflow-x:auto;">
+              <thead>
+              <tr>
+                <th>#</th>
+                <th>Time</th>
+                <th>Message</th>
+                <th>Class</th>
+                <th>Method</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td>0</td>
+                <td>09:54:1345-03-2016</td>
+                <td>Starting app...</td>
+                <td>com.mdasilva.mySockerApp.MainClass</td>
+                <td>main</td>
+              </tr>
+              <tr>
+                <td>0</td>
+                <td>09:54:1345-03-2016</td>
+                <td>Starting app...</td>
+                <td>com.mdasilva.mySockerApp.MainClass</td>
+                <td>main</td>
+              </tr>
+              <tr>
+                <td>0</td>
+                <td>09:54:1345-03-2016</td>
+                <td>Starting app...</td>
+                <td>com.mdasilva.mySockerApp.MainClass</td>
+                <td>main</td>
+              </tr>
+              <tr>
+                <td>0</td>
+                <td>09:54:1345-03-2016</td>
+                <td>Starting app...</td>
+                <td>com.mdasilva.mySockerApp.MainClass</td>
+                <td>main</td>
+              </tr>
+              <tr>
+                <td>0</td>
+                <td>09:54:1345-03-2016</td>
+                <td>Starting app...</td>
+                <td>com.mdasilva.mySockerApp.MainClass</td>
+                <td>main</td>
+              </tr>
+              <tr>
+                <td>0</td>
+                <td>09:54:1345-03-2016</td>
+                <td>Starting app...</td>
+                <td>com.mdasilva.mySockerApp.MainClass</td>
+                <td>main</td>
+              </tr>
+              <tr>
+                <td>0</td>
+                <td>09:54:1345-03-2016</td>
+                <td>Starting app...</td>
+                <td>com.mdasilva.mySockerApp.MainClass</td>
+                <td>main</td>
+              </tr>
+              <tr>
+                <td>0</td>
+                <td>09:54:1345-03-2016</td>
+                <td>Starting app...</td>
+                <td>com.mdasilva.mySockerApp.MainClass</td>
+                <td>main</td>
+              </tr>
+              <tr>
+                <td>0</td>
+                <td>09:54:1345-03-2016</td>
+                <td>Starting app...</td>
+                <td>com.mdasilva.mySockerApp.MainClass</td>
+                <td>main</td>
+              </tr>
+              <tr>
+                <td>0</td>
+                <td>09:54:1345-03-2016</td>
+                <td>Starting app...</td>
+                <td>com.mdasilva.mySockerApp.MainClass</td>
+                <td>main</td>
+              </tr>
+              <tr>
+                <td>0</td>
+                <td>09:54:1345-03-2016</td>
+                <td>Starting app...</td>
+                <td>com.mdasilva.mySockerApp.MainClass</td>
+                <td>main</td>
+              </tr>
+              <tr>
+                <td>0</td>
+                <td>09:54:1345-03-2016</td>
+                <td>Starting app...</td>
+                <td>com.mdasilva.mySockerApp.MainClass</td>
+                <td>main</td>
+              </tr>
+              <tr>
+                <td>0</td>
+                <td>09:54:1345-03-2016</td>
+                <td>Starting app...</td>
+                <td>com.mdasilva.mySockerApp.MainClass</td>
+                <td>main</td>
+              </tr>
+              <tr>
+                <td>0</td>
+                <td>09:54:1345-03-2016</td>
+                <td>Starting app...</td>
+                <td>com.mdasilva.mySockerApp.MainClass</td>
+                <td>main</td>
+              </tr>
+              <tr>
+                <td>0</td>
+                <td>09:54:1345-03-2016</td>
+                <td>Starting app...</td>
+                <td>com.mdasilva.mySockerApp.MainClass</td>
+                <td>main</td>
+              </tr>
+              <tr>
+                <td>0</td>
+                <td>09:54:1345-03-2016</td>
+                <td>Starting app...</td>
+                <td>com.mdasilva.mySockerApp.MainClass</td>
+                <td>main</td>
+              </tr>
+              <tr>
+                <td>0</td>
+                <td>09:54:1345-03-2016</td>
+                <td>Starting app...</td>
+                <td>com.mdasilva.mySockerApp.MainClass</td>
+                <td>main</td>
+              </tr>
+              <tr>
+                <td>0</td>
+                <td>09:54:1345-03-2016</td>
+                <td>Starting app...</td>
+                <td>com.mdasilva.mySockerApp.MainClass</td>
+                <td>main</td>
+              </tr>
+              <tr>
+                <td>0</td>
+                <td>09:54:1345-03-2016</td>
+                <td>Starting app...</td>
+                <td>com.mdasilva.mySockerApp.MainClass</td>
+                <td>main</td>
+              </tr>
+              <tr>
+                <td>0</td>
+                <td>09:54:1345-03-2016</td>
+                <td>Starting app...</td>
+                <td>com.mdasilva.mySockerApp.MainClass</td>
+                <td>main</td>
+              </tr>
+              <tr>
+                <td>0</td>
+                <td>09:54:1345-03-2016</td>
+                <td>Starting app...</td>
+                <td>com.mdasilva.mySockerApp.MainClass</td>
+                <td>main</td>
+              </tr>
+              <tr>
+                <td>0</td>
+                <td>09:54:1345-03-2016</td>
+                <td>Starting app...</td>
+                <td>com.mdasilva.mySockerApp.MainClass</td>
+                <td>main</td>
+              </tr>
+              <tr>
+                <td>0</td>
+                <td>09:54:1345-03-2016</td>
+                <td>Starting app...</td>
+                <td>com.mdasilva.mySockerApp.MainClass</td>
+                <td>main</td>
+              </tr>
+              <tr>
+                <td>0</td>
+                <td>09:54:1345-03-2016</td>
+                <td>Starting app...</td>
+                <td>com.mdasilva.mySockerApp.MainClass</td>
+                <td>main</td>
+              </tr>
+              <tr>
+                <td>0</td>
+                <td>09:54:1345-03-2016</td>
+                <td>Starting app...</td>
+                <td>com.mdasilva.mySockerApp.MainClass</td>
+                <td>main</td>
+              </tr>
+              <tr>
+                <td>0</td>
+                <td>09:54:1345-03-2016</td>
+                <td>Starting app...</td>
+                <td>com.mdasilva.mySockerApp.MainClass</td>
+                <td>main</td>
+              </tr>
+              <tr>
+                <td>0</td>
+                <td>09:54:1345-03-2016</td>
+                <td>Starting app...</td>
+                <td>com.mdasilva.mySockerApp.MainClass</td>
+                <td>main</td>
+              </tr>
+              <tr>
+                <td>0</td>
+                <td>09:54:1345-03-2016</td>
+                <td>Starting app...</td>
+                <td>com.mdasilva.mySockerApp.MainClass</td>
+                <td>main</td>
+              </tr>
+              <tr>
+                <td>0</td>
+                <td>09:54:1345-03-2016</td>
+                <td>Starting app...</td>
+                <td>com.mdasilva.mySockerApp.MainClass</td>
+                <td>main</td>
+              </tr>
+              <tr>
+                <td>0</td>
+                <td>09:54:1345-03-2016</td>
+                <td>Starting app...</td>
+                <td>com.mdasilva.mySockerApp.MainClass</td>
+                <td>main</td>
+              </tr>
+              <tr>
+                <td>0</td>
+                <td>09:54:1345-03-2016</td>
+                <td>Starting app...</td>
+                <td>com.mdasilva.mySockerApp.MainClass</td>
+                <td>main</td>
+              </tr>
+              <tr>
+                <td>0</td>
+                <td>09:54:1345-03-2016</td>
+                <td>Starting app...</td>
+                <td>com.mdasilva.mySockerApp.MainClass</td>
+                <td>main</td>
+              </tr>
+              <tr>
+                <td>0</td>
+                <td>09:54:1345-03-2016</td>
+                <td>Starting app...</td>
+                <td>com.mdasilva.mySockerApp.MainClass</td>
+                <td>main</td>
+              </tr>
+              <tr>
+                <td>0</td>
+                <td>09:54:1345-03-2016</td>
+                <td>Starting app...</td>
+                <td>com.mdasilva.mySockerApp.MainClass</td>
+                <td>main</td>
+              </tr>
+              <tr>
+                <td>0</td>
+                <td>09:54:1345-03-2016</td>
+                <td>Starting app...</td>
+                <td>com.mdasilva.mySockerApp.MainClass</td>
+                <td>main</td>
+              </tr>
+              <tr>
+                <td>0</td>
+                <td>09:54:1345-03-2016</td>
+                <td>Starting app...</td>
+                <td>com.mdasilva.mySockerApp.MainClass</td>
+                <td>main</td>
+              </tr>
+              <tr>
+                <td>0</td>
+                <td>09:54:1345-03-2016</td>
+                <td>Starting app...</td>
+                <td>com.mdasilva.mySockerApp.MainClass</td>
+                <td>main</td>
+              </tr>
+              <tr>
+                <td>0</td>
+                <td>09:54:1345-03-2016</td>
+                <td>Starting app...</td>
+                <td>com.mdasilva.mySockerApp.MainClass</td>
+                <td>main</td>
+              </tr>
+              <tr>
+                <td>0</td>
+                <td>09:54:1345-03-2016</td>
+                <td>Starting app...</td>
+                <td>com.mdasilva.mySockerApp.MainClass</td>
+                <td>main</td>
+              </tr>
+              <tr>
+                <td>0</td>
+                <td>09:54:1345-03-2016</td>
+                <td>Starting app...</td>
+                <td>com.mdasilva.mySockerApp.MainClass</td>
+                <td>main</td>
+              </tr>
+              <tr>
+                <td>0</td>
+                <td>09:54:1345-03-2016</td>
+                <td>Starting app...</td>
+                <td>com.mdasilva.mySockerApp.MainClass</td>
+                <td>main</td>
+              </tr>
+              </tbody>
+
+            </table>
+          </div>
+
+          <div class="row" id="detailsDiv">
+            <fieldset>
+              <legend> Details</legend>
+              <p>
+                #: 123 <br>
+                TIme: 09:54:1345-03-2016 <br>
+                Message: Starting app... <br>
+                Class: com.mdasilva.mySockerApp.MainClass <br>
+                Method: main<br>
+
+              </p>
+            </fieldset>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
+     <script>
+       !function(A,n,g,u,l,a,r){A.GoogleAnalyticsObject=l,A[l]=A[l]||function(){
+       (A[l].q=A[l].q||[]).push(arguments)},A[l].l=+new Date,a=n.createElement(g),
+       r=n.getElementsByTagName(g)[0],a.src=u,r.parentNode.insertBefore(a,r)
+       }(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+       ga('create', 'UA-XXXXX-X');
+       ga('send', 'pageview');
+    </script>
+
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <script src="scripts/app.js"></script>
+        <script src="scripts/controllers/main.js"></script>
+        <script src="scripts/controllers/about.js"></script>
+        <!-- endbuild -->
+</body>
+</html>
