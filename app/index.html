@@ -37,11 +37,12 @@
           <div class="col-xs-12">
             <form class="form-inline" role="form">
               <!-- Hacer una conexión -->
-              <div class="form-group">
-                <input type="link" class="form-control" id="link" placeholder="http://localhost:9200/myIndex">
-                <button type="button" class="btn btn-default">
+              <div class="form-group" ng-controller="ConnectionController as cc">
+                <input type="link" class="form-control" id="link" placeholder="http://localhost:9200/myIndex" ng-model="cc.index">
+                <button type="button" class="btn btn-default" ng-click="cc.connect()">
                   <span class="glyphicon glyphicon-ok"></span> Connect
                 </button>
+                <h4>{{cc.info}}</h4>
               </div>
             </form>
           </div>
@@ -59,11 +60,11 @@
             <form class="form-inline" role="search">
               <div class="form-group input-group">
                 <input type="text" class="form-control" placeholder="Search some text">
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">
-                              <span class="glyphicon glyphicon-search"></span>
-                            </button>
-                        </span>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="button">
+                      <span class="glyphicon glyphicon-search"></span>
+                    </button>
+                  </span>
               </div>
             </form>
           </div>
@@ -117,298 +118,16 @@
               <tr>
                 <th>#</th>
                 <th>Time</th>
-                <th>Message</th>
-                <th>Class</th>
-                <th>Method</th>
+                <th>Container Name</th>
+                <th>Log</th>
               </tr>
               </thead>
               <tbody>
               <tr>
                 <td>0</td>
                 <td>09:54:1345-03-2016</td>
-                <td>Starting app...</td>
-                <td>com.mdasilva.mySockerApp.MainClass</td>
-                <td>main</td>
-              </tr>
-              <tr>
-                <td>0</td>
-                <td>09:54:1345-03-2016</td>
-                <td>Starting app...</td>
-                <td>com.mdasilva.mySockerApp.MainClass</td>
-                <td>main</td>
-              </tr>
-              <tr>
-                <td>0</td>
-                <td>09:54:1345-03-2016</td>
-                <td>Starting app...</td>
-                <td>com.mdasilva.mySockerApp.MainClass</td>
-                <td>main</td>
-              </tr>
-              <tr>
-                <td>0</td>
-                <td>09:54:1345-03-2016</td>
-                <td>Starting app...</td>
-                <td>com.mdasilva.mySockerApp.MainClass</td>
-                <td>main</td>
-              </tr>
-              <tr>
-                <td>0</td>
-                <td>09:54:1345-03-2016</td>
-                <td>Starting app...</td>
-                <td>com.mdasilva.mySockerApp.MainClass</td>
-                <td>main</td>
-              </tr>
-              <tr>
-                <td>0</td>
-                <td>09:54:1345-03-2016</td>
-                <td>Starting app...</td>
-                <td>com.mdasilva.mySockerApp.MainClass</td>
-                <td>main</td>
-              </tr>
-              <tr>
-                <td>0</td>
-                <td>09:54:1345-03-2016</td>
-                <td>Starting app...</td>
-                <td>com.mdasilva.mySockerApp.MainClass</td>
-                <td>main</td>
-              </tr>
-              <tr>
-                <td>0</td>
-                <td>09:54:1345-03-2016</td>
-                <td>Starting app...</td>
-                <td>com.mdasilva.mySockerApp.MainClass</td>
-                <td>main</td>
-              </tr>
-              <tr>
-                <td>0</td>
-                <td>09:54:1345-03-2016</td>
-                <td>Starting app...</td>
-                <td>com.mdasilva.mySockerApp.MainClass</td>
-                <td>main</td>
-              </tr>
-              <tr>
-                <td>0</td>
-                <td>09:54:1345-03-2016</td>
-                <td>Starting app...</td>
-                <td>com.mdasilva.mySockerApp.MainClass</td>
-                <td>main</td>
-              </tr>
-              <tr>
-                <td>0</td>
-                <td>09:54:1345-03-2016</td>
-                <td>Starting app...</td>
-                <td>com.mdasilva.mySockerApp.MainClass</td>
-                <td>main</td>
-              </tr>
-              <tr>
-                <td>0</td>
-                <td>09:54:1345-03-2016</td>
-                <td>Starting app...</td>
-                <td>com.mdasilva.mySockerApp.MainClass</td>
-                <td>main</td>
-              </tr>
-              <tr>
-                <td>0</td>
-                <td>09:54:1345-03-2016</td>
-                <td>Starting app...</td>
-                <td>com.mdasilva.mySockerApp.MainClass</td>
-                <td>main</td>
-              </tr>
-              <tr>
-                <td>0</td>
-                <td>09:54:1345-03-2016</td>
-                <td>Starting app...</td>
-                <td>com.mdasilva.mySockerApp.MainClass</td>
-                <td>main</td>
-              </tr>
-              <tr>
-                <td>0</td>
-                <td>09:54:1345-03-2016</td>
-                <td>Starting app...</td>
-                <td>com.mdasilva.mySockerApp.MainClass</td>
-                <td>main</td>
-              </tr>
-              <tr>
-                <td>0</td>
-                <td>09:54:1345-03-2016</td>
-                <td>Starting app...</td>
-                <td>com.mdasilva.mySockerApp.MainClass</td>
-                <td>main</td>
-              </tr>
-              <tr>
-                <td>0</td>
-                <td>09:54:1345-03-2016</td>
-                <td>Starting app...</td>
-                <td>com.mdasilva.mySockerApp.MainClass</td>
-                <td>main</td>
-              </tr>
-              <tr>
-                <td>0</td>
-                <td>09:54:1345-03-2016</td>
-                <td>Starting app...</td>
-                <td>com.mdasilva.mySockerApp.MainClass</td>
-                <td>main</td>
-              </tr>
-              <tr>
-                <td>0</td>
-                <td>09:54:1345-03-2016</td>
-                <td>Starting app...</td>
-                <td>com.mdasilva.mySockerApp.MainClass</td>
-                <td>main</td>
-              </tr>
-              <tr>
-                <td>0</td>
-                <td>09:54:1345-03-2016</td>
-                <td>Starting app...</td>
-                <td>com.mdasilva.mySockerApp.MainClass</td>
-                <td>main</td>
-              </tr>
-              <tr>
-                <td>0</td>
-                <td>09:54:1345-03-2016</td>
-                <td>Starting app...</td>
-                <td>com.mdasilva.mySockerApp.MainClass</td>
-                <td>main</td>
-              </tr>
-              <tr>
-                <td>0</td>
-                <td>09:54:1345-03-2016</td>
-                <td>Starting app...</td>
-                <td>com.mdasilva.mySockerApp.MainClass</td>
-                <td>main</td>
-              </tr>
-              <tr>
-                <td>0</td>
-                <td>09:54:1345-03-2016</td>
-                <td>Starting app...</td>
-                <td>com.mdasilva.mySockerApp.MainClass</td>
-                <td>main</td>
-              </tr>
-              <tr>
-                <td>0</td>
-                <td>09:54:1345-03-2016</td>
-                <td>Starting app...</td>
-                <td>com.mdasilva.mySockerApp.MainClass</td>
-                <td>main</td>
-              </tr>
-              <tr>
-                <td>0</td>
-                <td>09:54:1345-03-2016</td>
-                <td>Starting app...</td>
-                <td>com.mdasilva.mySockerApp.MainClass</td>
-                <td>main</td>
-              </tr>
-              <tr>
-                <td>0</td>
-                <td>09:54:1345-03-2016</td>
-                <td>Starting app...</td>
-                <td>com.mdasilva.mySockerApp.MainClass</td>
-                <td>main</td>
-              </tr>
-              <tr>
-                <td>0</td>
-                <td>09:54:1345-03-2016</td>
-                <td>Starting app...</td>
-                <td>com.mdasilva.mySockerApp.MainClass</td>
-                <td>main</td>
-              </tr>
-              <tr>
-                <td>0</td>
-                <td>09:54:1345-03-2016</td>
-                <td>Starting app...</td>
-                <td>com.mdasilva.mySockerApp.MainClass</td>
-                <td>main</td>
-              </tr>
-              <tr>
-                <td>0</td>
-                <td>09:54:1345-03-2016</td>
-                <td>Starting app...</td>
-                <td>com.mdasilva.mySockerApp.MainClass</td>
-                <td>main</td>
-              </tr>
-              <tr>
-                <td>0</td>
-                <td>09:54:1345-03-2016</td>
-                <td>Starting app...</td>
-                <td>com.mdasilva.mySockerApp.MainClass</td>
-                <td>main</td>
-              </tr>
-              <tr>
-                <td>0</td>
-                <td>09:54:1345-03-2016</td>
-                <td>Starting app...</td>
-                <td>com.mdasilva.mySockerApp.MainClass</td>
-                <td>main</td>
-              </tr>
-              <tr>
-                <td>0</td>
-                <td>09:54:1345-03-2016</td>
-                <td>Starting app...</td>
-                <td>com.mdasilva.mySockerApp.MainClass</td>
-                <td>main</td>
-              </tr>
-              <tr>
-                <td>0</td>
-                <td>09:54:1345-03-2016</td>
-                <td>Starting app...</td>
-                <td>com.mdasilva.mySockerApp.MainClass</td>
-                <td>main</td>
-              </tr>
-              <tr>
-                <td>0</td>
-                <td>09:54:1345-03-2016</td>
-                <td>Starting app...</td>
-                <td>com.mdasilva.mySockerApp.MainClass</td>
-                <td>main</td>
-              </tr>
-              <tr>
-                <td>0</td>
-                <td>09:54:1345-03-2016</td>
-                <td>Starting app...</td>
-                <td>com.mdasilva.mySockerApp.MainClass</td>
-                <td>main</td>
-              </tr>
-              <tr>
-                <td>0</td>
-                <td>09:54:1345-03-2016</td>
-                <td>Starting app...</td>
-                <td>com.mdasilva.mySockerApp.MainClass</td>
-                <td>main</td>
-              </tr>
-              <tr>
-                <td>0</td>
-                <td>09:54:1345-03-2016</td>
-                <td>Starting app...</td>
-                <td>com.mdasilva.mySockerApp.MainClass</td>
-                <td>main</td>
-              </tr>
-              <tr>
-                <td>0</td>
-                <td>09:54:1345-03-2016</td>
-                <td>Starting app...</td>
-                <td>com.mdasilva.mySockerApp.MainClass</td>
-                <td>main</td>
-              </tr>
-              <tr>
-                <td>0</td>
-                <td>09:54:1345-03-2016</td>
-                <td>Starting app...</td>
-                <td>com.mdasilva.mySockerApp.MainClass</td>
-                <td>main</td>
-              </tr>
-              <tr>
-                <td>0</td>
-                <td>09:54:1345-03-2016</td>
-                <td>Starting app...</td>
-                <td>com.mdasilva.mySockerApp.MainClass</td>
-                <td>main</td>
-              </tr>
-              <tr>
-                <td>0</td>
-                <td>09:54:1345-03-2016</td>
-                <td>Starting app...</td>
-                <td>com.mdasilva.mySockerApp.MainClass</td>
-                <td>main</td>
+                <td>/app_test</td>
+                <td>2016-05-17 20:00:06.252  INFO 1 --- [main] j.LocalContainerEntityManagerFactoryBean :Building JPA container EntityManagerFactory for persistence unit 'default'</td>
               </tr>
               </tbody>
 
@@ -443,6 +162,8 @@
        ga('send', 'pageview');
     </script>
 
+
+
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
@@ -459,8 +180,7 @@
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
-        <script src="scripts/controllers/main.js"></script>
-        <script src="scripts/controllers/about.js"></script>
+        <script src="scripts/elasticsearch/elasticsearch.angular.js"></script>
         <!-- endbuild -->
 </body>
 </html>
