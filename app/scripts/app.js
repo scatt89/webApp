@@ -24,8 +24,7 @@ app.service('es', function (esFactory) {
   return esFactory({ host: 'localhost:9200' });
 });
 
-// We define an Angular controller that returns the server health
-// Inputs: $scope and the 'es' service
+//Controller that returns the server health
 app.controller("ConnectionController", ['es', function(es){
   this.info = "";
   var self = this;
@@ -39,3 +38,44 @@ app.controller("ConnectionController", ['es', function(es){
   });
 
 }]);
+
+//Controller that returns query results
+app.controller("QueryController", ['es','$log', function(es,$log){
+
+  var vm = this;
+
+  // search for documents
+  es.search({
+    index: 'logstash-2016.05.23',
+    size: 1000,
+    _source:["@timestamp", "container_name", "log"],
+    body:{
+      "query":{"match_all": {}}
+    }
+  }).then(function(response){
+    vm.hits = response.hits.hits;
+  }, function(error){
+    $log.debug(error);
+  });
+
+}]);
+
+//Controller that returns query results
+// app.controller("QueryController", ['es','$log', function(es,$log){
+//
+//   var vm = this;
+//
+//   // search for documents
+//   es.get({
+//     index: 'logstash-2016.05.23',
+//     type: '_all',
+//     _source:["@timestamp", "container_name", "log"]
+//   }, function (error, response){
+//     if(error){
+//       $log.debug(error);
+//     }else{
+//       vm = response.hits.hits;
+//     }
+//   });
+//
+// }]);

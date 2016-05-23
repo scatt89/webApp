@@ -92,9 +92,9 @@
           <div class="nav_element">
             <form role="form">
               <h3>Date filter
-                        <span>
-                            <input type="checkbox">
-                        </span>
+                <span>
+                    <input type="checkbox">
+                </span>
               </h3>
               <h4>Start time</h4>
               <input type="datetime-local">
@@ -112,7 +112,7 @@
 
         <!-- Contenido Principal -->
         <div class="col-xs-12 col-sm-9">
-          <div class="row" id="tableDiv">
+          <div class="row" id="tableDiv" ng-controller="QueryController as qc">
             <table class="table table-bordered table-striped table-hover table-condensed table-responsive" style="overflow-x:auto;">
               <thead>
               <tr>
@@ -123,11 +123,11 @@
               </tr>
               </thead>
               <tbody>
-              <tr>
-                <td>0</td>
-                <td>09:54:1345-03-2016</td>
-                <td>/app_test</td>
-                <td>2016-05-17 20:00:06.252  INFO 1 --- [main] j.LocalContainerEntityManagerFactoryBean :Building JPA container EntityManagerFactory for persistence unit 'default'</td>
+              <tr ng-repeat="hit in qc.hits">
+                <td>{{$index+1}}</td>
+                <td>{{hit['_source']['@timestamp']}}</td>
+                <td>{{hit._source.container_name}}</td>
+                <td>{{hit._source.log}}</td>
               </tr>
               </tbody>
 
