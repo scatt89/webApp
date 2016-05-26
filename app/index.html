@@ -118,16 +118,24 @@
               <tr>
                 <th>#</th>
                 <th>Time</th>
-                <th>Container Name</th>
-                <th>Log</th>
+                <th>Container name</th>
+                <th>Log Level</th>
+                <th>Process id</th>
+                <th>Thread name</th>
+                <th>Class</th>
+                <th>Message</th>
               </tr>
               </thead>
               <tbody>
               <tr ng-repeat="hit in qc.hits">
                 <td>{{$index+1}}</td>
-                <td>{{hit['_source']['@timestamp']}}</td>
+                <td>{{hit['_source']['time']}}</td>
                 <td>{{hit._source.container_name}}</td>
-                <td>{{hit._source.log}}</td>
+                <td>{{hit._source.log_level}}</td>
+                <td>{{hit._source.process_id}}</td>
+                <td>{{hit._source.thread_name}}</td>
+                <td>{{hit._source.class}}</td>
+                <td>{{hit._source.message}}</td>
               </tr>
               </tbody>
 
