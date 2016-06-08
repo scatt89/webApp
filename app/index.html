@@ -42,7 +42,7 @@
                 <button type="button" class="btn btn-default" ng-click="cc.connect()">
                   <span class="glyphicon glyphicon-ok"></span> Connect
                 </button>
-                <h4>{{cc.info}}</h4>
+                <h4 ng-bind="cc.info"></h4>
               </div>
             </form>
           </div>
@@ -124,18 +124,20 @@
                 <th>Thread name</th>
                 <th>Class</th>
                 <th>Message</th>
+                <!-- <th>Log</th> -->
               </tr>
               </thead>
               <tbody>
               <tr ng-repeat="hit in qc.hits">
-                <td>{{$index+1}}</td>
-                <td>{{hit['_source']['time']}}</td>
-                <td>{{hit._source.container_name}}</td>
-                <td>{{hit._source.log_level}}</td>
-                <td>{{hit._source.process_id}}</td>
-                <td>{{hit._source.thread_name}}</td>
-                <td>{{hit._source.class}}</td>
-                <td>{{hit._source.message}}</td>
+                <td ng-bind="$index+1"></td>
+                <td ng-bind="hit['_source']['@timestamp']"></td>
+                <td ng-bind="hit._source.container_name"></td>
+                <td ng-bind="hit._source.log_level"></td>
+                <td ng-bind="hit._source.process_id"></td>
+                <td ng-bind="hit._source.thread_name"></td>
+                <td ng-bind="hit._source.class"></td>
+                <td ng-bind="hit._source.message"></td>
+                <!-- <td>{{hit._source.log}}</td> -->
               </tr>
               </tbody>
 
