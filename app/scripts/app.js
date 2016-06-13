@@ -53,7 +53,6 @@ app.controller("QueryController", ['es','$log', function(es,$log){
       "query":{"match_all": {}}
     }
   }).then(function(response){
-    //vm.hits=  response.hits.hits;
     vm.hits = parseLogs(response.hits.hits);
 
   }, function(error){
@@ -64,25 +63,52 @@ app.controller("QueryController", ['es','$log', function(es,$log){
 
 var parseLogs = function(hits){
 
-    var new_hits = [];
-    var spring_log_regex = /^((\d{1,4}\-\d{1,2}\-\d{1,2})\s+(\d{1,2}\:\d{1,2}\:\d{1,2}\.\d{1,4})\s+(ERROR|WARN|INFO|DEBUG|TRACE|FATAL)\s+(\d+)\s+(---)\s+(\[[\w\-]*\])\s+([\w\.\[\]\/\\]*)\s+\:\s+(.*))/;
-    var hit;
-    for(hit in hits){
-      //$log.debug(hit);
-      if(hit._source.log){
-        if(spring_log_regex.exec(hit._source.log)){
-          var new_source = [];
-          new_source.time=hit._source.log.match(/^((\d{1,4}\-\d{1,2}\-\d{1,2})\s+(\d{1,2}\:\d{1,2}\:\d{1,2}\.\d{1,4}))/); //match timestamp
-          new_source.container_name=hit._source.container_name; //take the container name
-          new_source.log_level=hit._source.log.match(/(ERROR|WARN|INFO|DEBUG|TRACE|FATAL)/); //match the log level
-          new_source.process_id=hit._source.log.match(/\s+(\d+)\s+/); //match the process id
-          new_source.thread_name=hit._source.log.match(/\s+(\[[\w\-]*\])\s+/);
-          new_source.class=hit._source.log.match(/\s+([\w\.\[\]\/\\]*)\s+\:/);
-          new_source.message=hit._source.log.match(/\:\s+(.*)$/);
-          new_hits.push(new_source);
-        }
+  var new_hits = [];
+  var spring_log_regex = /^(\d{1,4}\-\d{1,2}\-\d{1,2}\s+\d{1,2}\:\d{1,2}\:\d{1,2}\.\d{1,4})\s+(ERROR|WARN|INFO|DEBUG|TRACE|FATAL)\s+(\d+)\s+---\s+(\[[\s\w\-]*\])\s+([\w\.\[\]\/\\]*)\s+\:\s+(.*)/;
+  var db_regex = /^(\d{1,4}-\d{1,2}\-\d{1,2}T\d{1,2}\:\d{1,2}\:\d{1,2}\.\d{1,8}Z)\s(\d+)\s(\[\w*\])\s(.*)/;
+
+  for(var index in hits){
+
+    var current_log = hits[index]._source.log;
+
+    if(hits[index]['_source']['container_name'] === "/db"){
+
+      var new_db_source = {};
+
+      var match = db_regex.exec(current_log);
+
+      if(match !== null){
+        new_db_source['timestamp'] =  match[1];
+        new_db_source['container_name'] =  "db";
+        new_db_source['log_level']="";
+        new_db_source['process_id'] =  match[2];
+        new_db_source['thread_name']="";
+        new_db_source['class'] =  match[3];
+        new_db_source['message'] =  match[4];
+
+        new_hits.push(new_db_source);
       }
     }
-    return new_hits;
+
+    if(hits[index]['_source']['container_name'] === "/app"){
+
+      var new_app_source = {};
+
+      var match = spring_log_regex.exec(current_log);
+
+      if(match !== null){
+        new_app_source['@timestamp'] =  match[1];
+        new_app_source['container_name'] =  "app";
+        new_app_source['log_level']= match[2];
+        new_app_source['process_id'] =  match[3];
+        new_app_source['thread_name']=match[4];
+        new_app_source['class'] =  match[5];
+        new_app_source['message'] =  match[6];
+
+        new_hits.push(new_app_source);
+      }
+    }
+  }
+  return new_hits;
 
 };
