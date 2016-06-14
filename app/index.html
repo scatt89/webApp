@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
   </head>
-  <body ng-app="webAppApp">
+  <body ng-app="webAppApp" ng-controller="QueryController as qc">
     <!--[if lte IE 8]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -37,12 +37,12 @@
           <div class="col-xs-12">
             <form class="form-inline" role="form">
               <!-- Hacer una conexión -->
-              <div class="form-group" ng-controller="ConnectionController as cc">
-                <input type="link" class="form-control" id="link" placeholder="http://localhost:9200/myIndex" ng-model="cc.index">
-                <button type="button" class="btn btn-default" ng-click="cc.connect()">
+              <div class="form-group">
+                <input type="link" class="form-control" id="link" placeholder="myIndex" ng-model="qc.index">
+                <button type="button" class="btn btn-default" ng-click="qc.connect()">
                   <span class="glyphicon glyphicon-ok"></span> Connect
                 </button>
-                <h4 ng-bind="cc.info"></h4>
+                <h4 ng-bind="qc.info"></h4>
               </div>
             </form>
           </div>
@@ -73,16 +73,16 @@
           <div class="nav_element">
             <form class="form-inline" role="form">
               <h3 id="logLevelTitle">Level log filter
-                <span><input type="checkbox"></span>
+                <span><input type="checkbox" ng-model="qc.log_level_filter_active"></span>
               </h3>
               <div class="form-group">
-                <select title="Log Level" class="form-control">
+                <select title="Log Level" class="form-control" ng-model="qc.log_level_filter">
                   <option selected disabled>Log Level</option>
-                  <option>All</option>
-                  <option>Info</option>
-                  <option>Warn</option>
-                  <option>Debug</option>
-                  <option>Error</option>
+                  <option>ALL</option>
+                  <option>INFO</option>
+                  <option>WARN</option>
+                  <option>DEBUG</option>
+                  <option>ERROR</option>
                 </select>
               </div>
             </form>
@@ -93,7 +93,7 @@
             <form role="form">
               <h3>Date filter
                 <span>
-                    <input type="checkbox">
+                    <input type="checkbox" ng-model="qc.date_filter_active">
                 </span>
               </h3>
               <h4>Start time</h4>
@@ -105,14 +105,14 @@
 
           <!-- Botón de buscar (GO!) -->
           <div class="nav_element">
-            <button type="button" class="btn btn-default btn-lg btn-block">Go!</button>
+            <button type="button" class="btn btn-default btn-lg btn-block" ng-click="qc.execute_filter()">Go!</button>
           </div>
 
         </div>
 
         <!-- Contenido Principal -->
         <div class="col-xs-12 col-sm-9">
-          <div class="row" id="tableDiv" ng-controller="QueryController as qc">
+          <div class="row" id="tableDiv">
             <table class="table table-bordered table-striped table-hover table-condensed table-responsive" style="overflow-x:auto;">
               <thead>
               <tr>
@@ -128,14 +128,14 @@
               </thead>
               <tbody>
               <tr ng-repeat="hit in qc.hits">
-                <td> {{$index+1}} </td>
-                <td> {{hit.timestamp}} </td>
-                <td> {{hit.container_name}} </td>
-                <td> {{hit.log_level}} </td>
-                <td> {{hit.process_id}} </td>
-                <td> {{hit.thread_name}} </td>
-                <td> {{hit.class}} </td>
-                <td> {{hit.message}} </td>
+                <td ng-bind="$index+1"></td>
+                <td ng-bind="hit.timestamp"></td>
+                <td ng-bind="hit.container_name"></td>
+                <td ng-bind="hit.log_level"></td>
+                <td ng-bind="hit.process_id"></td>
+                <td ng-bind="hit.thread_name"></td>
+                <td ng-bind="hit.class"></td>
+                <td ng-bind="hit.message"></td>
               </tr>
               </tbody>
 

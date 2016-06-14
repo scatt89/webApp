@@ -19,45 +19,78 @@ var app = angular
     'ngTouch'
   ]);
 
+//Value contains vector with log results
+app.value("log_results",[]);
+
 // Create the es service from the esFactory
 app.service('es', function (esFactory) {
   return esFactory({ host: 'localhost:9200' });
 });
 
-//Controller that returns the server health
-app.controller("ConnectionController", ['es', function(es){
-  this.info = "";
-  var self = this;
-
-  es.cluster.health(function (err, resp) {
-    if (err) {
-      self.info = err.message;
-    } else {
-      self.info = "Elasticsearch connected!";
-    }
-  });
-
-}]);
-
 //Controller that returns query results
-app.controller("QueryController", ['es','$log', function(es,$log){
+app.controller("QueryController", ['es','$log', 'log_results', function(es,$log,log_results){
 
   var vm = this;
 
-  // search for documents
-  es.search({
-    index: 'fluentd',
-    size: 1000,
-    _source:["@timestamp", "container_name", "log"],
-    body:{
-      "query":{"match_all": {}}
-    }
-  }).then(function(response){
-    vm.hits = parseLogs(response.hits.hits);
+  vm.hits = [];
+  vm.info = "";
+  vm.index = "fluentd";
+  vm.log_level_filter_active = false;
+  vm.log_level_filter = "ALL";
+  vm.date_filter_active = false;
+  vm.date_filter_start = "";
+  vm.date_filter_end = "";
 
-  }, function(error){
-    $log.debug(error);
-  });
+
+  vm.connect = function () {
+    es.cluster.health(function (err, resp) {
+      if (err) {
+        vm.info = err.message;
+      } else {
+        vm.info = "Elasticsearch connected to "+vm.index+" index";
+        vm.initial_query();
+      }
+    });
+  }
+
+  vm.initial_query = function(){
+    // search for documents
+    es.search({
+      index: vm.index,
+      size: 1000,
+      _source:["@timestamp", "container_name", "log"],
+      body:{
+        "query":{"match_all": {}}
+      }
+    }).then(function(response){
+      log_results = parseLogs(response.hits.hits);
+      vm.hits = log_results;
+    }, function(error){
+      $log.debug(error);
+    });
+  }
+
+  vm.execute_filter = function(){
+    $log.debug("inside execute_filter function");
+    var newResults = [];
+    $log.debug("log_level_filter_active: "+vm.log_level_filter_active);
+    $log.debug("log_level_filter: "+vm.log_level_filter);
+
+    if(!vm.log_level_filter_active && !vm.date_filter_active){
+      $log.debug("No filter to apply");
+    }else{
+      for(var index in log_results){
+        if(vm.log_level_filter_active){
+          if(vm.log_level_filter.toUpperCase() === "ALL" || log_results[index].log_level.toUpperCase() === vm.log_level_filter.toUpperCase()){
+            newResults.push(log_results[index]);
+            $log.debug(log_results[index].log_level.toUpperCase());
+            $log.debug(vm.log_level_filter.toUpperCase());
+          }
+        }
+      }
+      vm.hits = newResults;
+    }
+  }
 
 }]);
 
