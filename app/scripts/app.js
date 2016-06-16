@@ -87,6 +87,13 @@ app.controller("QueryController", ['es','$log', 'log_results', function(es,$log,
             $log.debug(vm.log_level_filter.toUpperCase());
           }
         }
+        if(vm.date_filter_active){
+          $log.debug(log_results[index].date);
+          if(log_results[index].date >= vm.date_filter_start && log_results[index].date <= vm.date_filter_end){
+            $log.debug("inside date filter with date"+log_results[index])
+            newResults.push(log_results[index]);
+          }
+        }
       }
       vm.hits = newResults;
     }
@@ -97,8 +104,10 @@ app.controller("QueryController", ['es','$log', 'log_results', function(es,$log,
 var parseLogs = function(hits){
 
   var new_hits = [];
-  var spring_log_regex = /^(\d{1,4}\-\d{1,2}\-\d{1,2}\s+\d{1,2}\:\d{1,2}\:\d{1,2}\.\d{1,4})\s+(ERROR|WARN|INFO|DEBUG|TRACE|FATAL)\s+(\d+)\s+---\s+(\[[\s\w\-]*\])\s+([\w\.\[\]\/\\]*)\s+\:\s+(.*)/;
-  var db_regex = /^(\d{1,4}-\d{1,2}\-\d{1,2}T\d{1,2}\:\d{1,2}\:\d{1,2}\.\d{1,8}Z)\s(\d+)\s(\[\w*\])\s(.*)/;
+  var spring_log_regex = /^(\d{1,4}\-\d{1,2}\-\d{1,2}\s+\d{1,2}\:\d{1,2}\:\d{1,2}\.\d{1,4})\s+(ERROR|WARN|INFO|DEBUG|TRACE|FATAL)\s+(\d+)\s+---\s+(\[[\s\w\-]*\])\s+([\w\.\[\]\/\\\$\?\¿\!\¡\,\;]*)\s+\:\s+(.*)/;
+  var spring_date_regex = /(\d{4})-(\d{2})-(\d{2})\s(\d{2})\:(\d{2})\:(\d{2})\.(\d+)/;
+  var mysql_log_regex = /^(\d{1,4}-\d{1,2}\-\d{1,2}T\d{1,2}\:\d{1,2}\:\d{1,2}\.\d{1,8}Z)\s(\d+)\s(\[\w*\])\s(.*)/;
+  var mysql_date_regex = /(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}).(\d+)Z/;
 
   for(var index in hits){
 
@@ -108,10 +117,11 @@ var parseLogs = function(hits){
 
       var new_db_source = {};
 
-      var match = db_regex.exec(current_log);
+      var match = mysql_log_regex.exec(current_log);
 
       if(match !== null){
-        new_db_source['timestamp'] =  match[1];
+        var date_parts = match[1].match(mysql_date_regex);//se obtiene el string timestamp del log
+        new_db_source['date'] =  new Date(date_parts[1],date_parts[2],date_parts[3],date_parts[4],date_parts[5],date_parts[6],date_parts[7]);//se construye el objeto fecha
         new_db_source['container_name'] =  "db";
         new_db_source['log_level']="";
         new_db_source['process_id'] =  match[2];
@@ -130,7 +140,8 @@ var parseLogs = function(hits){
       var match = spring_log_regex.exec(current_log);
 
       if(match !== null){
-        new_app_source['@timestamp'] =  match[1];
+        var date_parts = match[1].match(spring_date_regex);//se obtiene el string timestamp del log
+        new_app_source['date'] =  new Date(date_parts[1],date_parts[2],date_parts[3],date_parts[4],date_parts[5],date_parts[6],date_parts[7]);//se construye el objeto fecha
         new_app_source['container_name'] =  "app";
         new_app_source['log_level']= match[2];
         new_app_source['process_id'] =  match[3];

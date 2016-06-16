@@ -97,9 +97,9 @@
                 </span>
               </h3>
               <h4>Start time</h4>
-              <input type="datetime-local">
+              <input type="datetime-local" ng-model="qc.date_filter_start">
               <h4>End time</h4>
-              <input type="datetime-local">
+              <input type="datetime-local" ng.model="qc.date_filter_end">
             </form>
           </div>
 
@@ -117,7 +117,7 @@
               <thead>
               <tr>
                 <th>#</th>
-                <th>Time</th>
+                <th>Date</th>
                 <th>Container name</th>
                 <th>Log Level</th>
                 <th>Process id</th>
@@ -129,7 +129,7 @@
               <tbody>
               <tr ng-repeat="hit in qc.hits">
                 <td ng-bind="$index+1"></td>
-                <td ng-bind="hit.timestamp"></td>
+                <td ng-bind="hit.date | date:'yyyy-MM-dd HH:mm:ss:sss'"></td>
                 <td ng-bind="hit.container_name"></td>
                 <td ng-bind="hit.log_level"></td>
                 <td ng-bind="hit.process_id"></td>
