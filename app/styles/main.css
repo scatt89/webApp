@@ -35,3 +35,8 @@ input[type=checkbox] {
   height: 30px;
   width: 30px;
 }
+
+fieldset.small {
+  line-height: 70%;
+  font-size: large;
+}

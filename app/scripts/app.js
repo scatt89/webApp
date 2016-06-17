@@ -35,12 +35,23 @@ app.controller("QueryController", ['es','$log', 'log_results', function(es,$log,
   vm.hits = [];
   vm.info = "";
   vm.index = "fluentd";
+
   vm.log_level_filter_active = false;
   vm.log_level_filter = "ALL";
+
   vm.date_filter_active = false;
   vm.date_filter_start = "";
   vm.date_filter_end = "";
 
+  vm.detail_date = "";
+  vm.detail_container_name = "";
+  vm.detail_log_level = "";
+  vm.detail_process_id = "";
+  vm.detail_thread_name = "";
+  vm.detail_class = "";
+  vm.detail_message = "";
+
+  vm.text_search = "";
 
   vm.connect = function () {
     es.cluster.health(function (err, resp) {
@@ -51,7 +62,7 @@ app.controller("QueryController", ['es','$log', 'log_results', function(es,$log,
         vm.initial_query();
       }
     });
-  }
+  };
 
   vm.initial_query = function(){
     // search for documents
@@ -68,36 +79,44 @@ app.controller("QueryController", ['es','$log', 'log_results', function(es,$log,
     }, function(error){
       $log.debug(error);
     });
-  }
+  };
 
   vm.execute_filter = function(){
-    $log.debug("inside execute_filter function");
     var newResults = [];
-    $log.debug("log_level_filter_active: "+vm.log_level_filter_active);
-    $log.debug("log_level_filter: "+vm.log_level_filter);
-
     if(!vm.log_level_filter_active && !vm.date_filter_active){
       $log.debug("No filter to apply");
+      vm.hits = log_results;
     }else{
       for(var index in log_results){
+        var level_added = false;
         if(vm.log_level_filter_active){
-          if(vm.log_level_filter.toUpperCase() === "ALL" || log_results[index].log_level.toUpperCase() === vm.log_level_filter.toUpperCase()){
+          if(log_results[index].log_level.toUpperCase() === vm.log_level_filter.toUpperCase()){
             newResults.push(log_results[index]);
-            $log.debug(log_results[index].log_level.toUpperCase());
-            $log.debug(vm.log_level_filter.toUpperCase());
+            level_added = true;
           }
         }
-        if(vm.date_filter_active){
-          $log.debug(log_results[index].date);
-          if(log_results[index].date >= vm.date_filter_start && log_results[index].date <= vm.date_filter_end){
-            $log.debug("inside date filter with date"+log_results[index])
+        if(vm.date_filter_active && !level_added){
+          if((log_results[index].date >= vm.date_filter_start) && (log_results[index].date <= vm.date_filter_end)){
             newResults.push(log_results[index]);
           }
+        }else if(vm.date_filter_active && ((log_results[index].date < vm.date_filter_start) || (log_results[index].date > vm.date_filter_end))){
+            newResults.slice(index,1);
         }
       }
+      vm.hits = [];
       vm.hits = newResults;
     }
-  }
+  };
+
+  vm.showDetails = function(log){
+    vm.detail_date = log.date;
+    vm.detail_container_name = log.container_name;
+    vm.detail_log_level = log.log_level;
+    vm.detail_process_id = log.process_id;
+    vm.detail_thread_name = log.thread_name;
+    vm.detail_class = log.class;
+    vm.detail_message = log.message;
+  };
 
 }]);
 

@@ -59,11 +59,11 @@
             <h3>Text search</h3>
             <form class="form-inline" role="search">
               <div class="form-group input-group">
-                <input type="text" class="form-control" placeholder="Search some text">
+                <input type="text" class="form-control" placeholder="Search some text" ng-model="qc.text_search">
                   <span class="input-group-btn">
-                    <button class="btn btn-default" type="button">
+                    <!--<button class="btn btn-default" type="button" ng-click="qc.searchText()">
                       <span class="glyphicon glyphicon-search"></span>
-                    </button>
+                    </button>-->
                   </span>
               </div>
             </form>
@@ -78,7 +78,6 @@
               <div class="form-group">
                 <select title="Log Level" class="form-control" ng-model="qc.log_level_filter">
                   <option selected disabled>Log Level</option>
-                  <option>ALL</option>
                   <option>INFO</option>
                   <option>WARN</option>
                   <option>DEBUG</option>
@@ -99,7 +98,7 @@
               <h4>Start time</h4>
               <input type="datetime-local" ng-model="qc.date_filter_start">
               <h4>End time</h4>
-              <input type="datetime-local" ng.model="qc.date_filter_end">
+              <input type="datetime-local" ng-model="qc.date_filter_end">
             </form>
           </div>
 
@@ -127,7 +126,7 @@
               </tr>
               </thead>
               <tbody>
-              <tr ng-repeat="hit in qc.hits">
+              <tr ng-repeat="hit in qc.hits | filter:qc.text_search track by $index+1" ng-click="qc.showDetails(hit)">
                 <td ng-bind="$index+1"></td>
                 <td ng-bind="hit.date | date:'yyyy-MM-dd HH:mm:ss:sss'"></td>
                 <td ng-bind="hit.container_name"></td>
@@ -143,16 +142,15 @@
           </div>
 
           <div class="row" id="detailsDiv">
-            <fieldset>
+            <fieldset class="small">
               <legend> Details</legend>
-              <p>
-                #: 123 <br>
-                TIme: 09:54:1345-03-2016 <br>
-                Message: Starting app... <br>
-                Class: com.mdasilva.mySockerApp.MainClass <br>
-                Method: main<br>
-
-              </p>
+                <div><b>Container Name:</b> {{qc.detail_container_name}}</div><br>
+                <div><b>Date:</b> {{qc.detail_date}}</div><br>
+                <div><b>Log Level:</b> {{qc.detail_log_level}}</div><br>
+                <div><b>Process ID:</b> {{qc.detail_process_id}}</div><br>
+                <div><b>Thread Name:</b> {{qc.detail_thread_name}}</div><br>
+                <div><b>Class:</b> {{qc.detail_class}}</div><br>
+                <div><b>Message:</b> {{qc.detail_message}}</div><br>
             </fieldset>
           </div>
         </div>
